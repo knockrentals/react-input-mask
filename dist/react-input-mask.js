@@ -1,10 +1,11 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
-	typeof define === 'function' && define.amd ? define(['react'], factory) :
-	(global.ReactInputMask = factory(global.React));
-}(this, (function (React) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react'), require('react-dom')) :
+	typeof define === 'function' && define.amd ? define(['react', 'react-dom'], factory) :
+	(global.ReactInputMask = factory(global.React,global.ReactDOM));
+}(this, (function (React,ReactDOM) { 'use strict';
 
 React = React && React.hasOwnProperty('default') ? React['default'] : React;
+ReactDOM = ReactDOM && ReactDOM.hasOwnProperty('default') ? ReactDOM['default'] : ReactDOM;
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -437,10 +438,10 @@ function (_React$Component) {
     }
   };
 
-  _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+  _proto.componentDidUpdate = function componentDidUpdate() {
     var oldMaskOptions = this.maskOptions;
-    this.hasValue = nextProps.value != null;
-    this.maskOptions = parseMask(nextProps.mask, nextProps.maskChar, nextProps.formatChars);
+    this.hasValue = this.props.value != null;
+    this.maskOptions = parseMask(this.props.mask, this.props.maskChar, this.props.formatChars);
 
     if (!this.maskOptions.mask) {
       this.backspaceOrDeleteRemoval = null;
@@ -449,8 +450,8 @@ function (_React$Component) {
     }
 
     var isMaskChanged = this.maskOptions.mask && this.maskOptions.mask !== oldMaskOptions.mask;
-    var showEmpty = nextProps.alwaysShowMask || this.isFocused();
-    var newValue = this.hasValue ? this.getStringValue(nextProps.value) : this.value;
+    var showEmpty = this.props.alwaysShowMask || this.isFocused();
+    var newValue = this.hasValue ? this.getStringValue(this.props.value) : this.value;
 
     if (!oldMaskOptions.mask && !this.hasValue) {
       newValue = this.getInputValue();
@@ -475,16 +476,15 @@ function (_React$Component) {
       }
     }
 
-    if (this.maskOptions.mask && isEmpty(this.maskOptions, newValue) && !showEmpty && (!this.hasValue || !nextProps.value)) {
+    if (this.maskOptions.mask && isEmpty(this.maskOptions, newValue) && !showEmpty && (!this.hasValue || !this.props.value)) {
       newValue = '';
     }
 
     this.value = newValue;
-  };
 
-  _proto.componentDidUpdate = function componentDidUpdate() {
     if (this.maskOptions.mask && this.getInputValue() !== this.value) {
       this.setInputValue(this.value);
+      this.forceUpdate();
     }
   };
 
@@ -563,7 +563,7 @@ var _initialiseProps = function _initialiseProps() {
       } // React 0.13
 
 
-      return React.findDOMNode(input);
+      return ReactDOM.findDOMNode(input);
     }
   });
   Object.defineProperty(this, "getInputValue", {
