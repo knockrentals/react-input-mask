@@ -10,10 +10,11 @@ var config = {
     name: 'ReactInputMask',
     format: 'umd',
     globals: {
-      react: 'React'
+      react: 'React',
+      'react-dom': 'ReactDOM'
     }
   },
-  external: ['react'],
+  external: ['react', 'react-dom'],
   plugins: [
     nodeResolve({
       jsnext: true
