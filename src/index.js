@@ -1,5 +1,6 @@
 // https://github.com/sanniassin/react-input-mask
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import parseMask from './utils/parseMask';
 import { isAndroidBrowser, isWindowsPhoneBrowser, isAndroidFirefox } from './utils/environment';
@@ -16,8 +17,8 @@ import {
 import defer from './utils/defer';
 
 class InputElement extends React.Component {
-  lastCursorPos = null
-  focused = false
+  lastCursorPos = null;
+  focused = false;
 
   constructor(props) {
     super(props);
@@ -121,7 +122,7 @@ class InputElement extends React.Component {
     }
 
     // React 0.13
-    return React.findDOMNode(input);
+    return ReactDOM.findDOMNode(input);
   }
 
   getInputValue = () => {
